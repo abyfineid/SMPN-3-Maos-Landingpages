@@ -6,6 +6,7 @@ const navItems = [
   { label: 'Profil', href: '#about' },
   { label: 'Program', href: '#features' },
   { label: 'Galeri', href: '#gallery' },
+  { label: 'Erapor', href: 'https://erapor.spentimas.sch.id' },
   { label: 'Kontak', href: '#contact' },
 ];
 
@@ -20,6 +21,8 @@ const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const isExternalLink = (href: string) => href.startsWith('http');
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${
@@ -52,6 +55,8 @@ const Navbar: React.FC = () => {
               <a
                 key={item.label}
                 href={item.href}
+                target={isExternalLink(item.href) ? "_blank" : undefined}
+                rel={isExternalLink(item.href) ? "noopener noreferrer" : undefined}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   scrolled 
                     ? 'text-gray-600 hover:text-school-primary hover:bg-school-primary/5' 
@@ -88,6 +93,8 @@ const Navbar: React.FC = () => {
             <a
               key={item.label}
               href={item.href}
+              target={isExternalLink(item.href) ? "_blank" : undefined}
+              rel={isExternalLink(item.href) ? "noopener noreferrer" : undefined}
               className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                 scrolled 
                   ? 'text-gray-700 hover:text-school-primary hover:bg-school-primary/5' 

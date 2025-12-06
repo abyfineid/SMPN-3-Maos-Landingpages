@@ -17,9 +17,9 @@ const Footer: React.FC = () => {
               Membentuk karakter, mengukir prestasi. Sekolah menengah pertama unggulan di Kabupaten Cilacap.
             </p>
             <div className="flex space-x-4 pt-2">
-              <a href="#" className="hover:text-school-secondary transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="hover:text-school-secondary transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="hover:text-school-secondary transition-colors"><Youtube size={20} /></a>
+              <a href="#" aria-label="Kunjungi Facebook Kami" className="hover:text-school-secondary transition-colors"><Facebook size={20} /></a>
+              <a href="#" aria-label="Kunjungi Instagram Kami" className="hover:text-school-secondary transition-colors"><Instagram size={20} /></a>
+              <a href="#" aria-label="Kunjungi Youtube Kami" className="hover:text-school-secondary transition-colors"><Youtube size={20} /></a>
             </div>
           </div>
 
