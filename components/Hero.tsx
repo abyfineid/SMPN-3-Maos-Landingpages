@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
           willChange: 'transform'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-school-primary/90 to-school-accent/70 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-school-primary/95 to-school-accent/80 mix-blend-multiply"></div>
       </div>
 
       {/* Content */}
@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
           </span>
         </h1>
         
-        <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-lg md:text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
           SMP Negeri 3 Maos berkomitmen mencetak lulusan unggul dalam prestasi akademik, 
           cakap teknologi, dan berakhlak mulia.
         </p>
@@ -50,7 +50,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a 
             href="#contact"
-            className="w-full sm:w-auto px-8 py-4 bg-school-secondary hover:bg-amber-600 text-white font-bold rounded-full transition-all shadow-lg hover:shadow-amber-500/30 flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-8 py-4 bg-school-secondary hover:bg-amber-500 text-blue-900 font-bold rounded-full transition-all shadow-lg hover:shadow-amber-500/30 flex items-center justify-center gap-2"
           >
             Daftar Sekarang
             <ArrowRight size={20} />
