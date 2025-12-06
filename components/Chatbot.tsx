@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, AlertCircle } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { sendMessageToGemini } from '../services/geminiService';
 
@@ -10,6 +10,7 @@ const Chatbot: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [inputError, setInputError] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -23,11 +24,19 @@ const Chatbot: React.FC = () => {
   }, [messages, isOpen]);
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim()) {
+      setInputError(true);
+      // Optional: Auto hide error after 3 seconds
+      setTimeout(() => setInputError(false), 3000);
+      return;
+    }
+    
+    if (isLoading) return;
 
     const userMsg: ChatMessage = { role: 'user', text: input, timestamp: new Date() };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
+    setInputError(false);
     setIsLoading(true);
 
     try {
@@ -43,6 +52,13 @@ const Chatbot: React.FC = () => {
       console.error(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+    if (inputError && e.target.value.trim().length > 0) {
+      setInputError(false);
     }
   };
 
@@ -106,19 +122,33 @@ const Chatbot: React.FC = () => {
 
           {/* Input */}
           <div className="p-4 bg-white border-t">
+            {inputError && (
+              <div className="mb-2 text-xs text-red-500 flex items-center gap-1 animate-pulse">
+                <AlertCircle size={12} />
+                <span>Mohon ketik pesan terlebih dahulu</span>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <input
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={handleInputChange}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Tulis pesan..."
-                className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-school-primary/50 text-sm"
+                placeholder={inputError ? "Pesan tidak boleh kosong" : "Tulis pesan..."}
+                className={`flex-1 px-4 py-2 border rounded-full focus:outline-none text-sm transition-all duration-300 ${
+                  inputError 
+                    ? 'border-red-500 bg-red-50 focus:ring-2 focus:ring-red-200 placeholder-red-400' 
+                    : 'border-gray-200 focus:ring-2 focus:ring-school-primary/50'
+                }`}
               />
               <button
                 onClick={handleSend}
-                disabled={isLoading || !input.trim()}
-                className="p-2 bg-school-primary text-white rounded-full hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                disabled={isLoading}
+                className={`p-2 rounded-full transition-colors ${
+                  isLoading
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-school-primary text-white hover:bg-blue-700'
+                }`}
               >
                 <Send size={18} />
               </button>

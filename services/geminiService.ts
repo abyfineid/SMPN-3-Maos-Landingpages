@@ -1,10 +1,6 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { ChatMessage } from "../types";
 
-// Initialize Gemini
-// Note: process.env.API_KEY is injected by the environment.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const SYSTEM_INSTRUCTION = `
 Kamu adalah Asisten Virtual Cerdas untuk SMP Negeri 3 Maos. 
 Tugasmu adalah menjawab pertanyaan calon siswa, orang tua, dan pengunjung website dengan ramah, sopan, dan informatif.
@@ -28,6 +24,15 @@ export const sendMessageToGemini = async (
   newMessage: string
 ): Promise<string> => {
   try {
+    // Inisialisasi Lazy: Cek API Key di dalam fungsi, bukan di top-level file
+    // Ini mencegah error "API Key must be set" yang membuat halaman blank saat load
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+      console.error("API Key not found in environment variables");
+      return "Maaf, sistem AI sedang tidak dapat diakses (Konfigurasi API Key hilang). Hubungi administrator.";
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-2.5-flash';
     
     // Construct the prompt with history context
