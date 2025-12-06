@@ -5,8 +5,16 @@ const Hero: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -14,8 +22,8 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Overlay */}
+    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-school-accent">
+      {/* Background Image with Overlay - Moves slowest (Deepest layer) */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full"
         style={{ 
@@ -24,30 +32,47 @@ const Hero: React.FC = () => {
           willChange: 'transform'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-school-primary/95 to-school-accent/80 mix-blend-multiply"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-school-primary/90 via-school-primary/80 to-school-accent/80 mix-blend-multiply"></div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-school-secondary/20 border border-school-secondary/40 backdrop-blur-sm">
+        
+        {/* Floating Badge - Moves faster */}
+        <div 
+          style={{ transform: `translateY(${scrollY * 0.35}px)`, willChange: 'transform' }}
+          className="inline-block px-4 py-1.5 mb-6 rounded-full bg-school-secondary/20 border border-school-secondary/40 backdrop-blur-sm"
+        >
           <span className="text-school-secondary font-semibold text-sm uppercase tracking-wider">
             Penerimaan Siswa Baru 2025 Dibuka
           </span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
+        {/* Main Heading - Moves medium speed */}
+        <h1 
+          style={{ transform: `translateY(${scrollY * 0.25}px)`, willChange: 'transform' }}
+          className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight"
+        >
           Membangun Generasi <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-school-secondary to-yellow-200">
             Cerdas & Berkarakter
           </span>
         </h1>
         
-        <p className="text-lg md:text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
+        {/* Description - Moves slower */}
+        <p 
+          style={{ transform: `translateY(${scrollY * 0.15}px)`, willChange: 'transform' }}
+          className="text-lg md:text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed drop-shadow-sm"
+        >
           SMP Negeri 3 Maos berkomitmen mencetak lulusan unggul dalam prestasi akademik, 
           cakap teknologi, dan berakhlak mulia.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* Buttons - Moves almost with scroll */}
+        <div 
+          style={{ transform: `translateY(${scrollY * 0.1}px)`, willChange: 'transform' }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
           <a 
             href="#contact"
             className="w-full sm:w-auto px-8 py-4 bg-school-secondary hover:bg-amber-500 text-blue-900 font-bold rounded-full transition-all shadow-lg hover:shadow-amber-500/30 flex items-center justify-center gap-2"
@@ -64,8 +89,11 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      {/* Scroll Indicator - Fades out on scroll */}
+      <div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+        style={{ opacity: Math.max(0, 1 - scrollY / 300) }}
+      >
         <ChevronDown className="text-white/70" size={32} />
       </div>
     </section>
