@@ -25,6 +25,11 @@
         }
       }
     </script>
+    <script>
+      // Polyfill for process.env to prevent ReferenceError in browser production environments
+      // Ini mencegah crash "process is not defined" yang menyebabkan halaman putih
+      window.process = window.process || { env: {} };
+    </script>
   <script type="importmap">
 {
   "imports": {
