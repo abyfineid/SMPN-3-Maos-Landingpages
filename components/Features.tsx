@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BookOpen, Users, Trophy, Monitor, Heart, Globe } from 'lucide-react';
 import { Feature } from '../types';
 
@@ -36,6 +36,34 @@ const features: Feature[] = [
 ];
 
 const Features: React.FC = () => {
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('opacity-0', 'translate-y-10');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the item is visible
+        rootMargin: '0px 0px -50px 0px' // Slightly offset the trigger point
+      }
+    );
+
+    cardRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <section id="features" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,12 +82,14 @@ const Features: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div 
-              key={index} 
-              className="relative group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1"
+              key={index}
+              ref={(el) => (cardRefs.current[index] = el)}
+              className="relative group bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-700 ease-out border border-gray-100 hover:-translate-y-1 opacity-0 translate-y-10"
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-school-primary/5 rounded-full blur-2xl group-hover:bg-school-secondary/20 transition-colors"></div>
+              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-school-primary/5 rounded-full blur-2xl group-hover:bg-school-secondary/20 transition-colors duration-500"></div>
               
-              <div className="inline-flex items-center justify-center p-3 bg-school-primary/10 text-school-primary rounded-xl mb-5 group-hover:bg-school-primary group-hover:text-white transition-colors">
+              <div className="inline-flex items-center justify-center p-3 bg-school-primary/10 text-school-primary rounded-xl mb-5 group-hover:bg-school-primary group-hover:text-white transition-colors duration-300">
                 <feature.icon size={28} />
               </div>
               
