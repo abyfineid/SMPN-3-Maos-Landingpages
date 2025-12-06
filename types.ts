@@ -28,3 +28,12 @@ export interface TeacherProfile {
   role: string;
   image: string;
 }
+
+export interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  content: string;
+  image: string;
+  rating: number;
+}

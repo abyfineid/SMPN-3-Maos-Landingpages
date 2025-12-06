@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Features from './components/Features';
 import Stats from './components/Stats';
 import Gallery from './components/Gallery';
+import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import ScrollToTop from './components/ScrollToTop';
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Features />
         <Stats />
         <Gallery />
+        <Testimonials />
       </main>
       <Footer />
       <Chatbot />
