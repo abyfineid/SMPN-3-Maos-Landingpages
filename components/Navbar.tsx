@@ -6,7 +6,7 @@ const navItems = [
   { label: 'Profil', href: '#about' },
   { label: 'Program', href: '#features' },
   { label: 'Galeri', href: '#gallery' },
-  { label: 'Erapor', href: 'https://erapor.spentimas.sch.id' },
+  { label: 'Erapor', href: 'https://erapor.spentimas.my.id' },
   { label: 'Kontak', href: '#contact' },
 ];
 

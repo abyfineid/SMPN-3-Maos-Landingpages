@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
               <li><a href="https://smpn3maos.sch.id" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:pl-1 transition-all">Profil Sekolah</a></li>
               <li><a href="https://ppdb.smpn3maos.sch.id" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:pl-1 transition-all">PPDB Online</a></li>
               <li><a href="https://lms.smpn3maos.sch.id" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:pl-1 transition-all">E-Learning</a></li>
-              <li><a href="https://erapor.spentimas.sch.id" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:pl-1 transition-all">Erapor</a></li>
+              <li><a href="https://erapor.spentimas.my.id" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:pl-1 transition-all">Erapor</a></li>
               <li><a href="#" className="hover:text-white hover:pl-1 transition-all">Tenaga Pendidik</a></li>
             </ul>
           </div>
